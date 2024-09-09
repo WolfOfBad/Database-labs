@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/737aaff8-081a-404e-8a31-7a3868208492)![image](https://github.com/user-attachments/assets/9066cc1f-fb6f-4024-8a64-d00e0201cfd5)# Задания к главе 4
+# Задания к главе 4
 
 ## 1 задание
 
@@ -243,7 +243,6 @@ SELECT '05-18-2016'::date;
 ![image](https://github.com/user-attachments/assets/b48b73e9-7896-44b0-9b59-36c24376e333)
 
 ![image](https://github.com/user-attachments/assets/9fe7d53a-0229-4799-beee-3c86f7466240)
-
 
 ```sql
 SET datestyle TO DEFAULT;

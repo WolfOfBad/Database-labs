@@ -65,10 +65,10 @@ SELECT 'Inf'::double precision > 1E+308;
 ![image](https://github.com/user-attachments/assets/c11fe70b-d643-49e5-b22e-e2a6a499cc37)
 
 ```sql
-SELECT '-Inf'::double precision > 1E-307;
+SELECT '-Inf'::double precision < 1E-307;
 ```
 
-![image](https://github.com/user-attachments/assets/c018e6f8-0852-4880-a922-49afb46108a4)
+![image](https://github.com/user-attachments/assets/d2605f78-1439-43c8-9f20-ee2a1ffab720)
 
 ## 6 задание
 
@@ -267,3 +267,279 @@ SHOW datestyle;
 ![image](https://github.com/user-attachments/assets/ed199388-ed93-4df2-a925-2553b89bd084)
 
 ![image](https://github.com/user-attachments/assets/2d56a5b0-3c26-4dc6-b2bd-8780391993bc)
+
+## 13 задание
+
+`todo`
+
+## 14 задание
+
+`todo`
+
+## 15 задание
+
+```sql
+SELECT to_char( current_timestamp, 'dd-yyyy-hh-ss-mi-mm' );
+```
+
+![image](https://github.com/user-attachments/assets/2db1236f-e2fc-494a-873d-e415772a180c)
+
+## 16 задание
+
+```sql
+SELECT 'Feb 29, 2015'::date;
+```
+
+![image](https://github.com/user-attachments/assets/72c3bbfa-2851-42d8-a664-03244294f494)
+
+## 17 задание
+
+```sql
+SELECT '21:15:16:22'::time;
+```
+
+![image](https://github.com/user-attachments/assets/6cb183ad-1de2-47dc-8eaf-bd5a38dd3dfc)
+
+## 18 задание
+
+```sql
+SELECT ( '2016-09-16'::date - '2016-09-01'::date );
+```
+
+![image](https://github.com/user-attachments/assets/cf17392d-77d7-465a-840d-935e89e6ad85)
+
+Получаем `integer` (количество дней между датами)
+
+## 19 задание
+
+```sql
+SELECT ( '20:34:35'::time - '19:44:45'::time );
+```
+
+![image](https://github.com/user-attachments/assets/384197f3-504f-461d-95ac-31b6e03bbb95)
+
+```sql
+SELECT ( '20:34:35'::time + '19:44:45'::time );
+```
+
+![image](https://github.com/user-attachments/assets/94148235-1029-4a22-b0da-aa0912267b05)
+
+При сложении выдаст ошибку. Допустимые операции:
+
+![image](https://github.com/user-attachments/assets/e3f595ee-d51b-4b00-ae1d-c8ed63af303d)
+
+## 20 задание
+
+```sql
+SELECT ( current_timestamp - '2016-01-01'::timestamp )
+AS new_date;
+```
+
+![image](https://github.com/user-attachments/assets/83437b59-a39c-4882-be68-d0d621a71d2b)
+
+```sql
+SELECT ( current_timestamp + '1 mon'::interval ) AS new_date;
+```
+
+![image](https://github.com/user-attachments/assets/adca6c51-e30f-40e6-b1fb-7d0a1d7c0b5b)
+
+Без `AS new_date`
+
+![image](https://github.com/user-attachments/assets/f4e49e9f-babf-4df9-95b1-7202484ff3ae)
+
+## 21 задание
+
+```sql
+SELECT ( '2016-01-31'::date + '1 mon'::interval ) AS new_date;
+SELECT ( '2016-02-29'::date + '1 mon'::interval ) AS new_date;
+```
+
+![image](https://github.com/user-attachments/assets/25551979-c52e-417f-a7e3-6523e16bff20)
+
+![image](https://github.com/user-attachments/assets/08fd6184-457d-4a0f-bddb-6171b9d068e5)
+
+## 22 задание
+
+![image](https://github.com/user-attachments/assets/c7549dcc-3ef3-4cc3-a375-164a2bc03d5c)
+
+## 23 задание
+
+```sql
+SELECT ( '2016-09-16'::date - '2015-09-01'::date );
+SELECT ( '2016-09-16'::timestamp - '2015-09-01'::timestamp );
+```
+
+![image](https://github.com/user-attachments/assets/728ccfaf-494b-43e8-94e6-114552593c10)
+
+![image](https://github.com/user-attachments/assets/ed8aa6d9-d209-4988-93f8-2068472d4a32)
+
+Почему так см. 19 задание
+
+## 24 задание
+
+```sql
+SELECT ( '20:34:35'::time - 1 );
+SELECT ( '2016-09-16'::date - 1 );
+```
+
+![image](https://github.com/user-attachments/assets/f3f59809-ef2b-4996-8aea-d34772f43412)
+
+![image](https://github.com/user-attachments/assets/95ffd1b2-87bf-49bb-b09a-2b98a2b634bc)
+
+Почему так см. 19 задание. Чтобы работал первый запрос, надо привести 1 к `interval` или `time`
+
+## 25 задание
+
+```sql
+SELECT date_trunc('microsecond' from timestamp '1999-11-27 12:34:56.123459');
+SELECT date_trunc('millisecond' from timestamp '1999-11-27 12:34:56.123459');
+SELECT date_trunc('sec' from timestamp '1999-11-27 12:34:56.123459');
+SELECT date_trunc('min' from timestamp '1999-11-27 12:34:56.123459');
+SELECT date_trunc('hour' from timestamp '1999-11-27 12:34:56.123459');
+SELECT date_trunc('day' from timestamp '1999-11-27 12:34:56.123459');
+SELECT date_trunc('week' from timestamp '1999-11-27 12:34:56.123459');
+SELECT date_trunc('month' from timestamp '1999-11-27 12:34:56.123459');
+SELECT date_trunc('year' from timestamp '1999-11-27 12:34:56.123459');
+SELECT date_trunc('decade' from timestamp '1999-11-27 12:34:56.123459');
+SELECT date_trunc('century' from timestamp '1999-11-27 12:34:56.123459');
+SELECT date_trunc('millennium' from timestamp '1999-11-27 12:34:56.123459');
+```
+
+![image](https://github.com/user-attachments/assets/2df80f10-e7da-470d-8dbe-431d2e1d75e2)
+
+![image](https://github.com/user-attachments/assets/27e1af86-47ff-48e8-a657-8af2ab58832a)
+
+![image](https://github.com/user-attachments/assets/6b5f37d0-f336-4840-91ce-6c7aedd99517)
+
+![image](https://github.com/user-attachments/assets/5eb1b801-172d-429f-8ccc-6234ad35d6f0)
+
+![image](https://github.com/user-attachments/assets/1843edc5-7a67-49be-8c46-66d77b7f4429)
+
+![image](https://github.com/user-attachments/assets/68349009-4c9a-44b8-a880-46b455747af0)
+
+![image](https://github.com/user-attachments/assets/f75a5bae-fd86-4cf1-8c66-22d090e322b8)
+
+![image](https://github.com/user-attachments/assets/ec0f4a20-f998-48c1-933a-df6b95f02bf0)
+
+![image](https://github.com/user-attachments/assets/bd876f4f-0bf7-461c-9f00-9cb4d4cc3f5b)
+
+![image](https://github.com/user-attachments/assets/43d1fc74-2884-4646-9ae8-d44ed5eb8d81)
+
+![image](https://github.com/user-attachments/assets/d38ac191-5837-4e98-ba7a-f5a31f891941)
+
+![image](https://github.com/user-attachments/assets/ffca7f66-d474-439d-90ca-23e1c2fefddb)
+
+## 26 задание
+
+```sql
+SELECT date_trunc('sec', current_timestamp - '0001-01-01 00:00:00.00'::timestamp);
+```
+
+![image](https://github.com/user-attachments/assets/774f15e9-2870-4a07-9abf-525f3d7f0255)
+
+## 27 задание
+
+```sql
+SELECT extract('microsecond' from timestamp '1999-11-27 12:34:56.123459');
+SELECT extract('millisecond' from timestamp '1999-11-27 12:34:56.123459');
+SELECT extract('sec' from timestamp '1999-11-27 12:34:56.123459');
+SELECT extract('min' from timestamp '1999-11-27 12:34:56.123459');
+SELECT extract('hour' from timestamp '1999-11-27 12:34:56.123459');
+SELECT extract('day' from timestamp '1999-11-27 12:34:56.123459');
+SELECT extract('week' from timestamp '1999-11-27 12:34:56.123459');
+SELECT extract('month' from timestamp '1999-11-27 12:34:56.123459');
+SELECT extract('year' from timestamp '1999-11-27 12:34:56.123459');
+SELECT extract('decade' from timestamp '1999-11-27 12:34:56.123459');
+SELECT extract('century' from timestamp '1999-11-27 12:34:56.123459');
+SELECT extract('millennium' from timestamp '1999-11-27 12:34:56.123459');
+```
+
+![image](https://github.com/user-attachments/assets/e898d2ff-2d74-44bb-ae8c-6f36d03bbc3a)
+
+![image](https://github.com/user-attachments/assets/ad5edf86-28de-4e59-ac1d-b833fa105ef6)
+
+![image](https://github.com/user-attachments/assets/8783c68e-2ece-4a1f-9425-f59c80e94ee3)
+
+![image](https://github.com/user-attachments/assets/2e6f62ec-20fb-443e-9261-745709cde7f9)
+
+![image](https://github.com/user-attachments/assets/a750531b-bbca-4028-a027-4414148898c3)
+
+![image](https://github.com/user-attachments/assets/7c5e27ac-5189-47b0-8eb0-ddee2c2afd06)
+
+![image](https://github.com/user-attachments/assets/e79b3a86-d355-49f4-80b2-56d133e231e9)
+
+![image](https://github.com/user-attachments/assets/fc3ee2ce-39d5-425e-b7ac-6c12e2eebda9)
+
+![image](https://github.com/user-attachments/assets/56a093d8-54fd-4441-a318-56f881c1e7e9)
+
+![image](https://github.com/user-attachments/assets/987fbb6b-64a8-45e4-ab7e-dd4b50835c9f)
+
+![image](https://github.com/user-attachments/assets/b98330b7-4e8f-4f20-a7da-432fdd35812c)
+
+![image](https://github.com/user-attachments/assets/4c3a143c-22c1-4f82-8e88-6a3614017fdf)
+
+## 28 задание
+
+```sql
+SELECT extract('sec' from current_timestamp - '0001-01-01 00:00:00.00');
+```
+
+![image](https://github.com/user-attachments/assets/c702ba32-aeb5-4b1d-bbcd-0e2dd39ed990)
+
+## 29 задание
+
+## 30 задание
+
+## 31 задание
+
+## 32 задание
+
+## 33 задание
+
+## 34 задание
+
+## 35 задание
+
+## 36 задание
+
+## 37 задание
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

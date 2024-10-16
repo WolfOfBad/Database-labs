@@ -270,11 +270,16 @@ SHOW datestyle;
 
 ## 13 задание
 
-`todo`
+Заходим в контейнер, вводим
+```cmd
+export PGDATESTYLE="postgres"
+```
 
 ## 14 задание
 
-`todo`
+```cmd
+vi /var/lib/postgresql/data/postgres.conf
+```
 
 ## 15 задание
 
@@ -488,9 +493,67 @@ SELECT extract('sec' from current_timestamp - '0001-01-01 00:00:00.00');
 
 ## 29 задание
 
+Равнозначными являются
+
+```sql
+SELECT * FROM databases WHERE NOT is_open_source;
+SELECT * FROM databases WHERE is_open_source <> 'yes';
+SELECT * FROM databases WHERE is_open_source <> 't';
+SELECT * FROM databases WHERE is_open_source <> '1';
+```
+
+А здесь выдаст ошибку, потому что нужен явный каст
+
+```sql
+SELECT * FROM databases WHERE is_open_source <> 1;
+```
+
 ## 30 задание
 
+```sql
+CREATE TABLE test_bool
+(
+    a boolean,
+    b text
+);
+```
+
+Сработают (1, 3, 4, 5, 7, 9, 10, 11)
+
+```sql
+INSERT INTO test_bool VALUES ( TRUE, 'yes' );
+INSERT INTO test_bool VALUES ( 'yes', true );
+INSERT INTO test_bool VALUES ( 'yes', TRUE );
+INSERT INTO test_bool VALUES ( '1', 'true' );
+INSERT INTO test_bool VALUES ( 't', 'true' );
+INSERT INTO test_bool VALUES ( true, true );
+INSERT INTO test_bool VALUES ( 1::boolean, 'true' );
+INSERT INTO test_bool VALUES ( 111::boolean, 'true' );
+```
+
+Не сработают (2, 6, 8)
+
+```sql
+INSERT INTO test_bool VALUES ( yes, 'yes' );
+INSERT INTO test_bool VALUES ( 1, 'true' );
+INSERT INTO test_bool VALUES ( 't', truth );
+
+```
+
 ## 31 задание
+
+```sql
+CREATE TABLE birthdays
+( person text NOT NULL,
+  birthday date NOT NULL );
+
+INSERT INTO birthdays VALUES ( 'Ken Thompson', '1955-03-23' );
+INSERT INTO birthdays VALUES ( 'Ben Johnson', '1971-03-19' );
+INSERT INTO birthdays VALUES ( 'Andy Gibson', '1987-08-12' );
+
+SELECT * FROM birthdays
+WHERE extract( 'mon' from birthday ) = 3;
+```
 
 ## 32 задание
 

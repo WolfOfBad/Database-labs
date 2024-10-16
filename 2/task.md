@@ -555,54 +555,214 @@ SELECT * FROM birthdays
 WHERE extract( 'mon' from birthday ) = 3;
 ```
 
+![image](https://github.com/user-attachments/assets/ec118dcd-982f-425d-88c2-93e645941a40)
+
+```sql
+SELECT *, birthday + '40 years'::interval
+FROM birthdays
+WHERE birthday + '40 years'::interval < current_timestamp;
+```
+
+![image](https://github.com/user-attachments/assets/fe9eac9b-f03f-4374-b885-60a5a73d7c16)
+
+```sql
+SELECT *, birthday + '40 years'::interval
+FROM birthdays
+WHERE birthday + '40 years'::interval < current_date;
+```
+
+![image](https://github.com/user-attachments/assets/c0a5b8f6-5e8a-4c3b-a494-d65fed4c40d5)
+
+```sql
+SELECT *, ( current_date::timestamp - birthday::timestamp )::interval
+FROM birthdays;
+```
+
+![image](https://github.com/user-attachments/assets/8e29ef0b-39c9-4859-b503-2e993119b640)
+
+```sql
+SELECT *, justify_days( current_date::timestamp - birthday::timestamp )::interval
+FROM birthdays;
+```
+
+![image](https://github.com/user-attachments/assets/c4b494d0-95d3-41cc-bdb5-9d073ef94fd6)
+
 ## 32 задание
+
+```sql
+SELECT array_cat( ARRAY[ 1, 2, 3 ], ARRAY[ 3, 5 ] );
+
+SELECT array_remove( ARRAY[ 1, 2, 3 ], 3 );
+
+SELECT ARRAY[1,4,3] @> ARRAY[3,1,3];
+
+SELECT 3 || ARRAY[4,5,6];
+
+SELECT array_positions(ARRAY['A','A','B','A'], 'A');
+
+SELECT array_to_string(ARRAY[1, 2, 3, NULL, 5], ',', '*');
+
+SELECT unnest(ARRAY[['foo','bar'],['baz','quux']]);
+```
+
+![image](https://github.com/user-attachments/assets/f6b8dae9-249e-46fc-9639-74e2ea327266)
+
+![image](https://github.com/user-attachments/assets/0802e0e3-5ef9-4236-8434-b2dc0977efcb)
+
+![image](https://github.com/user-attachments/assets/ead6de79-0ef4-4036-9edf-ee8bc62c371d)
+
+![image](https://github.com/user-attachments/assets/4bff477c-40ad-4c2e-8b11-0bf62108ed4c)
+
+![image](https://github.com/user-attachments/assets/814676ff-f769-4d3d-8a28-5b3816dc1333)
+
+![image](https://github.com/user-attachments/assets/1a2aaf16-c7cc-4159-8355-875fcee70984)
+
+![image](https://github.com/user-attachments/assets/f6341006-d2e9-46db-87f3-a8e77d5c4187)
 
 ## 33 задание
 
+```sql
+CREATE TABLE pilots
+( pilot_name text,
+schedule integer[],
+meal text[]
+);
+
+INSERT INTO pilots
+VALUES ( 'Ivan', '{ 1, 3, 5, 6, 7 }'::integer[],
+'{ "сосиска", "макароны", "кофе" }'::text[]
+),
+( 'Petr', '{ 1, 2, 5, 7 }'::integer [],
+'{ "котлета", "каша", "кофе" }'::text[]
+),
+( 'Pavel', '{ 2, 5 }'::integer[],
+'{ "сосиска", "каша", "кофе" }'::text[]
+),
+( 'Boris', '{ 3, 5, 6 }'::integer[],
+'{ "котлета", "каша", "чай" }'::text[]
+);
+
+SELECT * FROM pilots;
+```
+
+![image](https://github.com/user-attachments/assets/36727315-c60c-465c-bc25-5196de5cba07)
+
+```sql
+SELECT * FROM pilots WHERE meal[ 1 ] = 'сосиска';
+```
+
+![image](https://github.com/user-attachments/assets/f1773a23-1fb9-4ba7-a209-d31ed678f2d0)
+
+```sql
+CREATE TABLE pilots_moded
+( pilot_name text,
+schedule integer[],
+meal text[][]
+);
+
+INSERT INTO pilots_moded
+VALUES ( 'Ivan', '{ 1, 3, 5, 6, 7 }'::integer[],
+'{{ "сосиска", "макароны", "кофе" },{ "котлета", "каша", "кофе" }}'::text[][]
+),
+( 'Petr', '{ 1, 2, 5, 7 }'::integer [],
+'{{ "котлета", "каша", "кофе"},{"котлета", "каша", "чай" }}'::text[][]
+),
+( 'Pavel', '{ 2, 5 }'::integer[],
+'{ {"сосиска", "каша", "кофе" },{"сосиска", "каша", "кофе" }}'::text[][]
+),
+( 'Boris', '{ 3, 5, 6 }'::integer[],
+'{{ "котлета", "каша", "кофе"},{"котлета", "каша", "чай" }}'::text[][]
+);
+
+SELECT * FROM pilots_moded;
+
+SELECT * FROM pilots_moded WHERE meal[2][ 3 ] = 'кофе';
+```
+
+![image](https://github.com/user-attachments/assets/9f6f4838-ce1d-4c97-ac1f-168206c41174)
+
+![image](https://github.com/user-attachments/assets/f258356e-79d8-416d-b05b-908c648216ad)
+
 ## 34 задание
+
+```sql
+CREATE TABLE pilot_hobbies
+(
+pilot_name text,
+hobbies jsonb
+);
+
+INSERT INTO pilot_hobbies
+VALUES ( 'Ivan',
+'{ "sports": [ "футбол", "плавание" ],
+"home_lib": true, "trips": 3
+}'::jsonb
+),
+( 'Petr',
+'{ "sports": [ "теннис", "плавание" ],
+"home_lib": true, "trips": 2
+}'::jsonb
+),
+( 'Pavel',
+'{ "sports": [ "плавание" ],
+"home_lib": false, "trips": 4
+}'::jsonb
+),
+( 'Boris',
+'{ "sports": [ "футбол", "плавание", "теннис" ],
+"home_lib": true, "trips": 0
+}'::jsonb
+);
+```
+
+```sql
+UPDATE pilot_hobbies
+SET hobbies = jsonb_set( hobbies, '{ trips }', '10' )
+WHERE pilot_name = 'Pavel';
+
+SELECT pilot_name, hobbies->'trips' AS trips FROM pilot_hobbies;
+```
+
+![image](https://github.com/user-attachments/assets/ddf6043b-1895-4dee-8b10-9e906620058e)
+
+```sql
+UPDATE pilot_hobbies
+SET hobbies = jsonb_set( hobbies, '{ home_lib }', 'false' )
+WHERE pilot_name = 'Ivan';
+
+SELECT pilot_name, hobbies->'trips' AS trips FROM pilot_hobbies;
+```
+
+![image](https://github.com/user-attachments/assets/699c8548-1ec5-464c-a3ac-ef52f18bfa4f)
 
 ## 35 задание
 
+```sql
+SELECT '{ "sports": "хоккей" }'::jsonb || '{ "trips": 5 }'::jsonb;
+```
+
+![image](https://github.com/user-attachments/assets/b599edae-654b-4b1a-84af-c572698878a6)
+
 ## 36 задание
+
+```sql
+SELECT * FROM pilot_hobbies;
+
+UPDATE pilot_hobbies
+SET hobbies = hobbies || '{ "travel": [ "USA" ] }'
+WHERE pilot_name = 'Pavel';
+```
+
+![image](https://github.com/user-attachments/assets/dde8ad7a-70c5-4688-a21e-3b74714342b2)
 
 ## 37 задание
 
+```sql
+UPDATE pilot_hobbies
+SET hobbies = hobbies - 'trips'
+WHERE pilot_name = 'Boris';
 
+SELECT * FROM pilot_hobbies;
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![image](https://github.com/user-attachments/assets/4b425c9a-dd9d-426e-95b7-95758c0f8531)
